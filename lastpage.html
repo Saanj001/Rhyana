@@ -1,63 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="css/flower.css" />
-  </head>
-  <body>
-    <div id="thankyou"><b> Hey Rhy! You’ve got my heart beating faster than a Quick Attack. I didn’t even need a Master Ball to know you’re the most legendary catch ever!
-    You’re my favorite shiny, and I choose you today and every day. I’m so lucky our paths crossed in the tall grass of life. It’s official: you’re now my boyfriend and my Valentine! ❤️ 💕</b></div>
-    <div class="flower">
-      <div class="f-wrapper">
-        <div class="flower__line"></div>
-        <div class="f">
-          <div class="flower__leaf flower__leaf--1"></div>
-          <div class="flower__leaf flower__leaf--2"></div>
-          <div class="flower__leaf flower__leaf--3"></div>
-          <div class="flower__leaf flower__leaf--4"></div>
-          <div class="flower__leaf flower__leaf--5"></div>
-          <div class="flower__leaf flower__leaf--6"></div>
-          <div class="flower__leaf flower__leaf--7"></div>
-          <div
-            class="flower__leaf flower__leaf--8 flower__fall-down--yellow"
-          ></div>
-        </div>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Rhythm 💖</title>
 
-      <div class="f-wrapper f-wrapper--2">
-        <div class="flower__line"></div>
-        <div class="f">
-          <div class="flower__leaf flower__leaf--1"></div>
-          <div class="flower__leaf flower__leaf--2"></div>
-          <div class="flower__leaf flower__leaf--3"></div>
-          <div class="flower__leaf flower__leaf--4"></div>
-          <div class="flower__leaf flower__leaf--5"></div>
-          <div class="flower__leaf flower__leaf--6"></div>
-          <div class="flower__leaf flower__leaf--7"></div>
-          <div
-            class="flower__leaf flower__leaf--8 flower__fall-down--pink"
-          ></div>
-        </div>
-      </div>
+  <!-- Lottie -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
-      <div class="f-wrapper f-wrapper--3">
-        <div class="flower__line"></div>
-        <div class="f">
-          <div class="flower__leaf flower__leaf--1"></div>
-          <div class="flower__leaf flower__leaf--2"></div>
-          <div class="flower__leaf flower__leaf--3"></div>
-          <div class="flower__leaf flower__leaf--4"></div>
-          <div class="flower__leaf flower__leaf--5"></div>
-          <div class="flower__leaf flower__leaf--6"></div>
-          <div class="flower__leaf flower__leaf--7"></div>
-          <div
-            class="flower__leaf flower__leaf--8 flower__fall-down--purple"
-          ></div>
-        </div>
-      </div>
-      <div class="flower__glass"></div>
+  <!-- CSS -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fff6e8;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #thankyou {
+      max-width: 820px;
+      margin: auto;
+      padding: 44px 32px;
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.65;
+      color: #f28c8c;
+      background: rgba(255, 182, 193, 0.18);
+      border-radius: 22px;
+      box-shadow:
+        0 0 45px rgba(255, 160, 180, 0.35),
+        inset 0 0 25px rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(6px);
+    }
+
+    #typeText {
+      margin: 0;
+      font-weight: 400;
+      letter-spacing: 0.4px;
+    }
+
+    .lottie-wrap {
+      margin-top: 24px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Music -->
+  <audio id="bgMusic" src="cant-help-falling-in-love.mp3" autoplay></audio>
+
+  <!-- Content -->
+  <div id="thankyou">
+    <p id="typeText">
+      You’ve got my heart beating faster than a Quick Attack.
+      I didn’t even need a Master Ball to know you’re the most legendary catch ever.
+      You’re my favorite shiny, and I choose you today and every day.
+      It’s official: you’re now my boyfriend and my Valentine! 💖
+    </p>
+
+    <div class="lottie-wrap">
+      <lottie-player
+        src="https://assets10.lottiefiles.com/packages/lf20_touohxv0.json"
+        background="transparent"
+        speed="0.6"
+        style="width: 140px; height: 140px; margin: auto;"
+        loop
+        autoplay>
+      </lottie-player>
     </div>
-  </body>
+  </div>
+
+  <!-- JS: music-synced typing -->
+  <script>
+    const music = document.getElementById("bgMusic");
+    const textElement = document.getElementById("typeText");
+    const text = textElement.innerText;
+    textElement.innerText = "";
+    let i = 0;
+
+    music.onplay = () => {
+      function typeWriter() {
+        if (i < text.length) {
+          textElement.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 42); // romantic pacing
+        }
+      }
+      typeWriter();
+    };
+  </script>
+
+</body>
 </html>
