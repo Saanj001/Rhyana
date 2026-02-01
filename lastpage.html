@@ -2,53 +2,51 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<title>For You 💛</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>For Rhythm 💖</title>
 
 <style>
   body {
     margin: 0;
-    min-height: 100vh;
-    background: radial-gradient(circle at top, #fff0e3, #ffe1cf);
+    height: 100vh;
+    background: radial-gradient(circle at top, #fff4ea, #ffe2d1);
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     font-family: "Georgia", serif;
     overflow: hidden;
   }
 
-  /* Floating hearts background */
-  .heart-bg span {
+  /* Floating sparkles */
+  .sparkle {
     position: absolute;
-    bottom: -50px;
-    font-size: 18px;
-    animation: floatUp 12s linear infinite;
-    opacity: 0.35;
+    width: 6px;
+    height: 6px;
+    background: #ffd1dc;
+    border-radius: 50%;
+    animation: sparkleFloat 6s infinite ease-in-out;
+    opacity: 0.6;
   }
 
-  .heart-bg span:nth-child(1) { left: 10%; animation-delay: 0s; }
-  .heart-bg span:nth-child(2) { left: 30%; animation-delay: 4s; }
-  .heart-bg span:nth-child(3) { left: 50%; animation-delay: 2s; }
-  .heart-bg span:nth-child(4) { left: 70%; animation-delay: 6s; }
-  .heart-bg span:nth-child(5) { left: 90%; animation-delay: 1s; }
-
-  @keyframes floatUp {
-    0% { transform: translateY(0) scale(0.8); }
-    100% { transform: translateY(-110vh) scale(1.2); }
+  @keyframes sparkleFloat {
+    0% { transform: translateY(0) scale(0.6); opacity: 0; }
+    30% { opacity: 0.6; }
+    100% { transform: translateY(-120vh) scale(1); opacity: 0; }
   }
 
   .card {
-    position: relative;
-    max-width: 760px;
-    padding: 48px 42px 56px;
-    text-align: center;
-    background: rgba(255,255,255,0.65);
-    border-radius: 30px;
+    width: 360px;
+    max-width: 92%;
+    background: rgba(255,255,255,0.7);
+    border-radius: 28px;
+    padding: 26px 22px 34px;
     box-shadow:
-      0 30px 80px rgba(255, 140, 140, 0.35),
-      inset 0 0 45px rgba(255,255,255,0.6);
-    backdrop-filter: blur(10px);
+      0 30px 90px rgba(255, 150, 120, 0.4),
+      inset 0 0 50px rgba(255,255,255,0.6);
+    text-align: center;
+    position: relative;
     z-index: 2;
+    backdrop-filter: blur(10px);
   }
 
   /* Controls */
@@ -56,121 +54,124 @@
     display: flex;
     justify-content: center;
     gap: 14px;
-    margin-bottom: 26px;
+    margin-bottom: 18px;
   }
 
-  .ctrl {
-    width: 52px;
-    height: 52px;
+  .btn {
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    border: none;
+    font-size: 18px;
     color: white;
-    box-shadow: 0 10px 22px rgba(255,120,120,0.45);
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 140, 140, 0.5);
   }
 
+  .btn:active { transform: scale(0.92); }
+
+  /* Text */
   #text {
-    font-size: 22px;
-    line-height: 1.7;
     color: #e97c7c;
-    min-height: 200px;
+    font-size: 16px;
+    line-height: 1.65;
+    min-height: 130px;
+    margin-top: 6px;
   }
 
-  /* Pikachu area */
+  /* Pikachu zone */
   .pikachu-zone {
     position: relative;
-    height: 220px;
-    margin-top: 30px;
+    height: 260px;
+    margin-top: 18px;
   }
 
-  /* Main Pikachu (bigger, waiting) */
   .pika-main {
     position: absolute;
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
-    animation: floatMain 3.5s ease-in-out infinite;
+    animation: floatPika 3.5s ease-in-out infinite;
   }
 
   .pika-main img {
-    width: 200px;
-    filter: drop-shadow(0 16px 30px rgba(255,150,150,0.6));
-    border-radius: 20px;
+    width: 260px;
+    filter:
+      drop-shadow(0 0 30px rgba(255, 200, 120, 0.9))
+      drop-shadow(0 25px 45px rgba(255, 160, 120, 0.6));
   }
 
-  @keyframes floatMain {
+  @keyframes floatPika {
     0% { transform: translateX(-50%) translateY(0); }
     50% { transform: translateX(-50%) translateY(-10px); }
     100% { transform: translateX(-50%) translateY(0); }
   }
 
-  /* Second Pikachu (comes from far) */
-  .pika-coming {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
+  /* Fade to black */
+  .fadeout {
+    position: fixed;
+    inset: 0;
+    background: black;
     opacity: 0;
-    transform: translateX(-50%) translateY(120px) scale(0.4);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #ffd6e8;
+    letter-spacing: 1px;
+    z-index: 10;
+    transition: opacity 3s ease;
   }
 
-  .pika-coming img {
-    width: 160px;
-    border-radius: 20px;
-  }
-
-  .pika-coming.active {
-    animation: comeIn 2.8s ease-out forwards;
-  }
-
-  @keyframes comeIn {
-    0% {
-      opacity: 0;
-      transform: translateX(-50%) translateY(120px) scale(0.4);
-    }
-    60% {
-      opacity: 1;
-      transform: translateX(-50%) translateY(-20px) scale(1);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(-50%) translateY(-10px) scale(1.05);
-    }
+  .fadeout.show {
+    opacity: 1;
+    pointer-events: auto;
   }
 </style>
 </head>
 
 <body>
 
-<div class="heart-bg">
-  <span>💗</span><span>💖</span><span>💞</span><span>💓</span><span>💘</span>
-</div>
+<!-- Sparkles -->
+<script>
+  for (let i = 0; i < 20; i++) {
+    const s = document.createElement("div");
+    s.className = "sparkle";
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.animationDelay = Math.random() * 6 + "s";
+    document.body.appendChild(s);
+  }
+</script>
 
 <div class="card">
 
+  <!-- Controls -->
   <div class="controls">
-    <button class="ctrl" id="play">▶</button>
-    <button class="ctrl" id="pause">⏸</button>
-    <button class="ctrl" id="stop">⏹</button>
+    <button class="btn" id="play">▶</button>
+    <button class="btn" id="pause">⏸</button>
+    <button class="btn" id="stop">⏹</button>
   </div>
 
+  <!-- Text -->
   <div id="text"></div>
 
+  <!-- Pikachu -->
   <div class="pikachu-zone">
-    <!-- MAIN -->
     <div class="pika-main">
-      <img src="https://media.tenor.com/e1y0uPpvw1gAAAAM/pika-pika-kiss-pikachu.gif">
-    </div>
-
-    <!-- COMING -->
-    <div class="pika-coming" id="pikaComing">
-      <img src="https://media.tenor.com/e1y0uPpvw1gAAAAM/pika-pika-kiss-pikachu.gif">
+      <img src="https://media.tenor.com/Q7GexxazmCQAAAAM/pikachu-pokemon.gif" />
     </div>
   </div>
 
 </div>
 
+<!-- Fade End -->
+<div class="fadeout" id="fadeEnd">
+  The End 💘
+</div>
+
+<!-- Music -->
 <audio id="music">
   <source src="music/cant-help-falling-in-love.mp3" type="audio/mpeg">
 </audio>
@@ -178,44 +179,52 @@
 <script>
   const music = document.getElementById("music");
   const textBox = document.getElementById("text");
-  const pikaComing = document.getElementById("pikaComing");
+  const fadeEnd = document.getElementById("fadeEnd");
 
-  const fullText =
-    "You’ve got my heart beating faster than a Quick Attack. " +
-    "I didn’t even need a Master Ball to know you’re the most legendary catch ever. " +
-    "You’re my favorite shiny, and I choose you today and every day. " +
-    "It’s official: you’re now my boyfriend and my Valentine. 💖";
+  const lines = [
+    "Wise men say, only fools rush in…",
+    "But I can’t help falling in love with you.",
+    "You’ve got my heart beating faster than a Quick Attack.",
+    "You’re my favorite shiny.",
+    "And I choose you — today and every day. 💛"
+  ];
 
-  let i = 0;
-  let typing;
+  let line = 0;
+  let char = 0;
 
-  function typeText() {
-    if (i < fullText.length) {
-      textBox.innerHTML += fullText.charAt(i);
-      i++;
-      typing = setTimeout(typeText, 65);
+  function typeLine() {
+    if (char < lines[line].length) {
+      textBox.innerHTML += lines[line].charAt(char);
+      char++;
+      setTimeout(typeLine, 55);
+    } else {
+      setTimeout(() => {
+        textBox.innerHTML += "<br/><br/>";
+        line++;
+        char = 0;
+        if (line < lines.length) typeLine();
+      }, 700);
     }
   }
 
   document.getElementById("play").onclick = () => {
     music.play();
-    if (i === 0) typeText();
-    setTimeout(() => pikaComing.classList.add("active"), 1800);
+    if (textBox.innerHTML === "") typeLine();
   };
 
-  document.getElementById("pause").onclick = () => {
-    music.pause();
-    clearTimeout(typing);
-  };
+  document.getElementById("pause").onclick = () => music.pause();
 
   document.getElementById("stop").onclick = () => {
     music.pause();
     music.currentTime = 0;
-    clearTimeout(typing);
     textBox.innerHTML = "";
-    i = 0;
-    pikaComing.classList.remove("active");
+    line = 0;
+    char = 0;
   };
+
+  music.addEventListener("ended", () => {
+    fadeEnd.classList.add("show");
+  });
 </script>
 
 </body>
