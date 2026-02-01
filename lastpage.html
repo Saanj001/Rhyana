@@ -42,7 +42,7 @@
     max-width: 760px;
     padding: 48px 42px 56px;
     text-align: center;
-    background: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.65);
     border-radius: 30px;
     box-shadow:
       0 30px 80px rgba(255, 140, 140, 0.35),
@@ -71,67 +71,106 @@
     box-shadow: 0 10px 22px rgba(255,120,120,0.45);
   }
 
-  .ctrl:active { transform: scale(0.92); }
-
   #text {
-    font-size: 21px;
+    font-size: 22px;
     line-height: 1.7;
     color: #e97c7c;
     min-height: 200px;
   }
 
-  /* Pikachu GIF animation */
-  .pikachu {
-    margin-top: 28px;
-    animation: floatPika 3.5s ease-in-out infinite;
+  /* Pikachu area */
+  .pikachu-zone {
+    position: relative;
+    height: 220px;
+    margin-top: 30px;
   }
 
-  .pikachu img {
+  /* Main Pikachu (bigger, waiting) */
+  .pika-main {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    animation: floatMain 3.5s ease-in-out infinite;
+  }
+
+  .pika-main img {
+    width: 200px;
+    filter: drop-shadow(0 16px 30px rgba(255,150,150,0.6));
+    border-radius: 20px;
+  }
+
+  @keyframes floatMain {
+    0% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+    100% { transform: translateX(-50%) translateY(0); }
+  }
+
+  /* Second Pikachu (comes from far) */
+  .pika-coming {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    opacity: 0;
+    transform: translateX(-50%) translateY(120px) scale(0.4);
+  }
+
+  .pika-coming img {
     width: 160px;
-    filter: drop-shadow(0 12px 22px rgba(255,150,150,0.6));
-    border-radius: 18px;
+    border-radius: 20px;
   }
 
-  @keyframes floatPika {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0); }
+  .pika-coming.active {
+    animation: comeIn 2.8s ease-out forwards;
+  }
+
+  @keyframes comeIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(120px) scale(0.4);
+    }
+    60% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-20px) scale(1);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-10px) scale(1.05);
+    }
   }
 </style>
 </head>
 
 <body>
 
-<!-- Floating hearts -->
 <div class="heart-bg">
   <span>💗</span><span>💖</span><span>💞</span><span>💓</span><span>💘</span>
 </div>
 
 <div class="card">
 
-  <!-- CONTROLS -->
   <div class="controls">
     <button class="ctrl" id="play">▶</button>
     <button class="ctrl" id="pause">⏸</button>
     <button class="ctrl" id="stop">⏹</button>
   </div>
 
-  <!-- TEXT -->
-  <div id="text">
-    You’ve got my heart beating faster than a Quick Attack.
-    I didn’t even need a Master Ball to know you’re the most legendary catch ever.
-    You’re my favorite shiny, and I choose you today and every day.
-    It’s official: you’re now my boyfriend and my Valentine. 💖
-  </div>
+  <div id="text"></div>
 
-  <!-- PIKACHU GIF -->
-  <div class="pikachu">
-    <img src="https://media.tenor.com/e1y0uPpvw1gAAAAM/pika-pika-kiss-pikachu.gif" alt="pikachu kiss" />
+  <div class="pikachu-zone">
+    <!-- MAIN -->
+    <div class="pika-main">
+      <img src="https://media.tenor.com/e1y0uPpvw1gAAAAM/pika-pika-kiss-pikachu.gif">
+    </div>
+
+    <!-- COMING -->
+    <div class="pika-coming" id="pikaComing">
+      <img src="https://media.tenor.com/e1y0uPpvw1gAAAAM/pika-pika-kiss-pikachu.gif">
+    </div>
   </div>
 
 </div>
 
-<!-- MUSIC -->
 <audio id="music">
   <source src="music/cant-help-falling-in-love.mp3" type="audio/mpeg">
 </audio>
@@ -139,13 +178,14 @@
 <script>
   const music = document.getElementById("music");
   const textBox = document.getElementById("text");
-  const fullText = textBox.innerText.trim();
+  const pikaComing = document.getElementById("pikaComing");
 
-  const playBtn = document.getElementById("play");
-  const pauseBtn = document.getElementById("pause");
-  const stopBtn = document.getElementById("stop");
+  const fullText =
+    "You’ve got my heart beating faster than a Quick Attack. " +
+    "I didn’t even need a Master Ball to know you’re the most legendary catch ever. " +
+    "You’re my favorite shiny, and I choose you today and every day. " +
+    "It’s official: you’re now my boyfriend and my Valentine. 💖";
 
-  textBox.innerText = "";
   let i = 0;
   let typing;
 
@@ -157,24 +197,24 @@
     }
   }
 
-  playBtn.onclick = () => {
-    if (music.paused) {
-      music.play();
-      if (i === 0) typeText();
-    }
+  document.getElementById("play").onclick = () => {
+    music.play();
+    if (i === 0) typeText();
+    setTimeout(() => pikaComing.classList.add("active"), 1800);
   };
 
-  pauseBtn.onclick = () => {
+  document.getElementById("pause").onclick = () => {
     music.pause();
     clearTimeout(typing);
   };
 
-  stopBtn.onclick = () => {
+  document.getElementById("stop").onclick = () => {
     music.pause();
     music.currentTime = 0;
     clearTimeout(typing);
-    textBox.innerText = "";
+    textBox.innerHTML = "";
     i = 0;
+    pikaComing.classList.remove("active");
   };
 </script>
 
